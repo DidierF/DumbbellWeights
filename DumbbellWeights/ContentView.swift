@@ -17,17 +17,23 @@ struct ContentView: View {
 //    private var items: FetchedResults<Item>
 //
 
-  var currentIndex = 0;
 
   var exercises = ["Chest Press", "Back Rows", "Curls", "Overhead rises"];
 
   var baseWeight = 35;
   var weightDiff = 5;
 
+  var numberOfSets = 3;
+  @State var currentSet = 0;
+
+  @State var chosenWeights: [[Int]] = [];
+
   var visibleWeights: [Int] = [];
 
   init() {
     updateWeights();
+
+    chosenWeights = [];
   }
 
   mutating func updateWeights() {
@@ -40,24 +46,42 @@ struct ContentView: View {
     ];
   }
 
-  func onWeightPress(_ weight: Int) {
-    print(weight);
-  }
-
   var body: some View {
-    Text(exercises[currentIndex])
+    Text(exercises[currentSet])
       .font(.title)
       .fontWeight(.bold)
 
-    List(content: {
-      ForEach(visibleWeights, id: \.self) { weight in
-        Button(String(weight), action: {
-          onWeightPress(weight)
-        })
-//        Text(String(weight))
-      }
+    Spacer()
 
-    })
+    HStack {
+      Text("( ")
+      if chosenWeights.count > currentSet {
+        ForEach(chosenWeights[currentSet], id: \.self) { w in
+          Text(String(w))
+        }
+      }
+      Text(" )")
+    }
+
+
+    List(visibleWeights, id: \.self) { weight in
+        Button(String(weight), action: {
+          print(chosenWeights)
+          if (chosenWeights.count <= currentSet) {
+            chosenWeights.insert([weight], at: currentSet)
+          } else {
+            chosenWeights[currentSet].append(weight)
+          }
+          print(chosenWeights)
+        })
+    }
+
+    HStack {
+      Button("Next exercise", action: {
+        currentSet += 1;
+
+      })
+    }
   }
 
 //    var body: some View {
