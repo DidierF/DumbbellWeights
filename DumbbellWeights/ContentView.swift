@@ -17,10 +17,9 @@ struct ContentView: View {
 //    private var items: FetchedResults<Item>
 //
 
+  var workout = UpperBodyWorkout()
 
-  var exercises = ["Chest Press", "Back Rows", "Curls", "Overhead rises"];
-
-  var baseWeight = 35;
+  @State var baseWeight = 35;
   var weightDiff = 5;
 
   var numberOfSets = 3;
@@ -28,26 +27,25 @@ struct ContentView: View {
 
   @State var chosenWeights: [[Int]] = [];
 
-  var visibleWeights: [Int] = [];
+  @State var visibleWeights: [Int] = [];
 
   init() {
     updateWeights();
-
     chosenWeights = [];
   }
 
-  mutating func updateWeights() {
+  func updateWeights() {
     visibleWeights = [
-      baseWeight - weightDiff*2,
-      baseWeight - weightDiff,
-      baseWeight,
+      baseWeight + weightDiff*2,
       baseWeight + weightDiff,
-      baseWeight + weightDiff*2
+      baseWeight,
+      baseWeight - weightDiff,
+      baseWeight - weightDiff*2
     ];
   }
 
   var body: some View {
-    Text(exercises[currentSet])
+    Text(workout.exercises[currentSet].name)
       .font(.title)
       .fontWeight(.bold)
 
@@ -63,9 +61,17 @@ struct ContentView: View {
       Text(" )")
     }
 
+    Spacer()
 
-    List(visibleWeights, id: \.self) { weight in
-        Button(String(weight), action: {
+
+    Button("+") {
+      baseWeight += weightDiff;
+      updateWeights();
+    }
+
+    VStack(alignment: .center, spacing: 8) {
+      ForEach(visibleWeights, id: \.self) { weight in
+        WeightButton(title: String(weight), action: {
           print(chosenWeights)
           if (chosenWeights.count <= currentSet) {
             chosenWeights.insert([weight], at: currentSet)
@@ -74,14 +80,30 @@ struct ContentView: View {
           }
           print(chosenWeights)
         })
+      }
+    }.onAppear {updateWeights()}
+
+
+    Button("-") {
+      baseWeight -= weightDiff;
+      updateWeights();
     }
+
+
+    Spacer()
 
     HStack {
       Button("Next exercise", action: {
-        currentSet += 1;
+        print(workout.exercises.count)
+        print(currentSet + 1)
+        if (workout.exercises.count > currentSet + 1) {
+          currentSet += 1;
+        }
 
       })
     }
+
+    Spacer()
   }
 
 //    var body: some View {
@@ -152,5 +174,5 @@ struct ContentView: View {
 //}()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()//.environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
