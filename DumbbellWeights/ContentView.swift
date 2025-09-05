@@ -36,74 +36,108 @@ struct ContentView: View {
 
   func updateWeights() {
     visibleWeights = [
-      baseWeight + weightDiff*2,
       baseWeight + weightDiff,
       baseWeight,
       baseWeight - weightDiff,
-      baseWeight - weightDiff*2
     ];
   }
 
+  private var arrowsSize = 36.0
+
   var body: some View {
-    Text(workout.exercises[currentSet].name)
-      .font(.title)
-      .fontWeight(.bold)
+    ZStack {
+      Color
+        .background
+        .ignoresSafeArea(.all)
 
-    Spacer()
+      VStack {
+        Text(workout.exercises[currentSet].name)
+          .font(.system(size: 48))
+          .fontWeight(.bold)
+          .foregroundStyle(Color.white)
+          .padding()
 
-    HStack {
-      Text("( ")
-      if chosenWeights.count > currentSet {
-        ForEach(chosenWeights[currentSet], id: \.self) { w in
-          Text(String(w))
-        }
-      }
-      Text(" )")
-    }
-
-    Spacer()
-
-
-    Button("+") {
-      baseWeight += weightDiff;
-      updateWeights();
-    }
-
-    VStack(alignment: .center, spacing: 8) {
-      ForEach(visibleWeights, id: \.self) { weight in
-        WeightButton(title: String(weight), action: {
-          print(chosenWeights)
-          if (chosenWeights.count <= currentSet) {
-            chosenWeights.insert([weight], at: currentSet)
+        HStack {
+          if chosenWeights.count > currentSet {
+            ForEach(chosenWeights[currentSet], id: \.self) { w in
+              Text(String(w))
+            }
           } else {
-            chosenWeights[currentSet].append(weight)
+            Text(" ")
           }
-          print(chosenWeights)
-        })
-      }
-    }.onAppear {updateWeights()}
+        }
+        .font(.system(size: 24))
+        .foregroundStyle(Color.secondaryText)
+        .fontWeight(.medium)
+        .padding()
+
+        Spacer()
 
 
-    Button("-") {
-      baseWeight -= weightDiff;
-      updateWeights();
-    }
-
-
-    Spacer()
-
-    HStack {
-      Button("Next exercise", action: {
-        print(workout.exercises.count)
-        print(currentSet + 1)
-        if (workout.exercises.count > currentSet + 1) {
-          currentSet += 1;
+        Button {
+          baseWeight += weightDiff;
+          updateWeights()
+        } label: {
+          Image(systemName: "chevron.up")
+            .resizable()
+            .scaledToFit()
+            .tint(.primary3)
+            .frame(width: arrowsSize, height: arrowsSize)
         }
 
-      })
-    }
+        VStack(alignment: .center, spacing: 8) {
+          ForEach(visibleWeights, id: \.self) { weight in
+            WeightButton(title: String(weight), primary: weight == baseWeight, action: {
+              print(chosenWeights)
+              if (chosenWeights.count <= currentSet) {
+                chosenWeights.insert([weight], at: currentSet)
+              } else {
+                chosenWeights[currentSet].append(weight)
+              }
+              print(chosenWeights)
+            }).padding(6)
+          }
+        }.onAppear {updateWeights()}
 
-    Spacer()
+
+        Button {
+          baseWeight -= weightDiff;
+          updateWeights();
+        } label: {
+          Image(systemName: "chevron.down")
+            .resizable()
+            .scaledToFit()
+            .tint(.primary3)
+            .frame(width: arrowsSize, height: arrowsSize)
+        }
+
+        Spacer()
+
+        Button {
+          print(workout.exercises.count)
+          print(currentSet + 1)
+          if (workout.exercises.count > currentSet + 1) {
+            currentSet += 1;
+          }
+
+        } label: {
+          HStack {
+            Text("Next Exercise")
+              .font(.system(size: 24))
+              .fontWeight(.bold)
+              .foregroundStyle(Color.primary2)
+
+            Image(systemName: "chevron.right")
+              .resizable()
+              .scaledToFit()
+              .tint(.primary2)
+              .frame(width: 18, height: 18)
+
+          }
+        }
+        .padding()
+      }
+    }
   }
 
 //    var body: some View {
