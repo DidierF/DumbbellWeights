@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Upper Body",
+    "exercises": [
+      {
+        "name": "Incline Press",
+        "target": "Chest"
+      },
+      {
+        "name": "Biceps Curl",
+        "target": "Biceps"
+      },
+      {
+        "name": "Bent Over Rows",
+        "target": "Back"
+      },
+      {
+        "name": "Overhead Extensions",
+        "target": "Triceps"
+      },
+      {
+        "name": "Military Press",
+        "target": "Shoulders"
+      }
+    ]
+  }
+]
