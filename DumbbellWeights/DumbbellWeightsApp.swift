@@ -30,7 +30,6 @@ struct DumbbellWeightsApp: App {
     let existing = try? context.fetch(fetchDescriptor)
     if let existing, !existing.isEmpty {
       clearData(container: container, models: [WorkoutTemplate.self, Exercise.self])
-      return
     }
 
     print("Creating data")
