@@ -20,19 +20,10 @@ struct ContentView: View {
 
   @State var visibleWeights: [Int] = [];
 
-  @State var allWeights = [150, 140, 130, 120, 110, 100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1]
-  
-  init() {
-    updateWeights();
-    chosenWeights = [];
-  }
+  @State var allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
 
-  func updateWeights() {
-    visibleWeights = [
-      baseWeight + weightDiff,
-      baseWeight,
-      baseWeight - weightDiff,
-    ];
+  init() {
+    chosenWeights = [];
   }
 
   func onWeightPress(_ weight: Int) {
@@ -78,7 +69,7 @@ struct ContentView: View {
 
 
         Button {
-          baseWeight += weightDiff;
+          baseWeight = min(baseWeight + weightDiff, allWeights.first!);
         } label: {
           Image(systemName: "chevron.up")
             .resizable()
@@ -86,10 +77,11 @@ struct ContentView: View {
             .tint(.primary3)
             .frame(width: arrowsSize, height: arrowsSize)
         }
+        
         WeightScrollView(items: $allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
 
         Button {
-          baseWeight -= weightDiff;
+          baseWeight = max(baseWeight - weightDiff, allWeights.last ?? 0);
         } label: {
           Image(systemName: "chevron.down")
             .resizable()
