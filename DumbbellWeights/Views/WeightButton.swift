@@ -21,6 +21,7 @@ struct WeightButton: View {
       .frame(width: primary ? 187 : 135, height: primary ? 88 : 64)
       .background(primary ? Color.primary1 : Color.primary2)
       .cornerRadius(8)
+      .id(title)
   }
 }
 

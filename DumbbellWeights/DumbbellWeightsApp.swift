@@ -12,7 +12,7 @@ import SwiftData
 struct DumbbellWeightsApp: App {
   var body: some Scene {
     WindowGroup {
-      WorkoutListView()
+      ContentView()
         .modelContainer(for: [WorkoutTemplate.self, Exercise.self])
         .task {
           await PreloadData()
