@@ -31,6 +31,29 @@ class Exercise {
   }
 }
 
+@Model
+class ExerciseSet {
+  var exercise: Exercise
+  var weight: Int
+  var reps: Int
+
+  init(exercise: Exercise, weight: Int, reps: Int) {
+    self.exercise = exercise
+    self.weight = weight
+    self.reps = reps
+  }
+}
+
+@Model
+class Workout {
+  var date: Date = Date()
+  var sets: [ExerciseSet] = []
+  var duration: Float = 0.0
+
+  init() {}
+
+}
+
 enum Muscle: String, Codable {
   case chest = "Chest"
   case back = "Back"
