@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct WorkoutView: View {
   // var workout = UpperBodyWorkout()
 
   @State var baseWeight = 35;
@@ -120,5 +120,5 @@ struct ContentView: View {
 }
 
 #Preview {
-  ContentView()
+  WorkoutView()
 }
