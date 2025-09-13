@@ -12,6 +12,7 @@ struct WeightScrollView: View {
   @Binding var selectedItem: Int
 
   @State private var scrollCenter: Double = 0
+  @State private var isScrolling: Bool = false
 
   let onWeightPress: (_:Int) -> Void
 
@@ -29,7 +30,7 @@ struct WeightScrollView: View {
   }
 
   var body: some View {
-    CenteredScrollView(onCenterChange: onCenterChange, initialItem: $selectedItem) {
+    CenteredScrollView(onCenterChange: onCenterChange, initialItem: $selectedItem, isScrolling: $isScrolling) {
       LazyVStack {
         ForEach(items, id: \.self) { weight in
           WeightButton(title: String(weight), primary: weight == selectedItem) {
@@ -38,7 +39,9 @@ struct WeightScrollView: View {
           .padding(6)
           .background {
             ItemGeometryReader() { newValue in
-              onScroll(weight, newValue: newValue)
+              if isScrolling {
+                onScroll(weight, newValue: newValue)
+              }
             }
           }
         }

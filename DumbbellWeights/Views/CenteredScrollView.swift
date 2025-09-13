@@ -11,16 +11,18 @@ struct CenteredScrollView<Content: View>: View {
   let content: Content
   let onCenterChange: (_ newCenter: Double) -> Void
   @Binding var centeredItem: Int
-  @State private var isScrolling = false
+  @Binding var isScrolling: Bool
 
   init(
     onCenterChange: @escaping (Double) -> Void = {_ in },
     initialItem: Binding<Int>,
+    isScrolling: Binding<Bool> = .constant(false),
     @ViewBuilder content: () -> Content
   ) {
     self.content = content()
     self.onCenterChange = onCenterChange
     self._centeredItem = initialItem
+    self._isScrolling = isScrolling
   }
 
   var body: some View {
@@ -42,7 +44,6 @@ struct CenteredScrollView<Content: View>: View {
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.viewAligned)
         .onChange(of: centeredItem, initial: true) {
-          print("On CenteredItem change")
           if !isScrolling {
             proxy.scrollTo(centeredItem, anchor: .center)
           }
@@ -76,7 +77,5 @@ struct ItemGeometryReader: View {
 }
 
 #Preview {
-  CenteredScrollView(initialItem: .constant(0)) {
-//    Text("")
-  }
+  CenteredScrollView(initialItem: .constant(0)) { }
 }
