@@ -45,11 +45,11 @@ struct ContentView: View {
         .ignoresSafeArea(.all)
 
       VStack {
-        //        Text(workout.exercises[currentSet].name)
-        //          .font(.system(size: 48))
-        //          .fontWeight(.bold)
-        //          .foregroundStyle(Color.white)
-        //          .padding()
+        Text("Chest Press")
+          .font(.system(size: 48))
+          .fontWeight(.bold)
+          .foregroundStyle(Color.white)
+          .padding()
 
         HStack {
           if chosenWeights.count > currentSet {
