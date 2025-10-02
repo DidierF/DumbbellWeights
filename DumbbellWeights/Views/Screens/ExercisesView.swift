@@ -6,16 +6,10 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ExercisesView: View {
-  var exercises = [
-    "Chest Press",
-    "Rows",
-    "Biceps Curl",
-    "Triceps Extensions",
-    "Military Press",
-    "Bent Over Flies"
-  ]
+  @Query() var exercises: [Exercise]
 
   init() {
     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
@@ -34,12 +28,15 @@ struct ExercisesView: View {
         ScrollView() {
           VStack {
             ForEach(exercises, id: \.self) { ex in
-              Text(ex)
-                .font(.system(size: 24))
-                .fontWeight(.bold)
-                .padding()
+              Button {
+                print(ex.name)
+              } label: {
+                Text(ex.name)
+                  .font(.system(size: 24))
+                  .fontWeight(.bold)
+                  .padding()
+              }
             }
-            //        .padding()
             .frame(minWidth: 300, minHeight: 75)
             .background(.primary2)
             .foregroundStyle(.white)

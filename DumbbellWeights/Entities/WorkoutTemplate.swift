@@ -22,12 +22,12 @@ class WorkoutTemplate {
 @Model
 class Exercise {
   var name: String
-  var target: Muscle
-  var secondaryTargets: [String] = []
+//  var target: Muscle
+//  var secondaryTargets: [String] = []
 
-  init(_ name: String, target: Muscle) {
+  init(_ name: String/*, target: Muscle*/) {
     self.name = name
-    self.target = target
+//    self.target = target
   }
 }
 
