@@ -22,6 +22,7 @@ struct WeightButton: View {
       .background(primary ? Color.primary1 : Color.primary2)
       .cornerRadius(8)
       .id(title)
+      .animation(.default, value: primary)
   }
 }
 
