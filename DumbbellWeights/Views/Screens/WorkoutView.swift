@@ -35,8 +35,9 @@ struct WorkoutView: View {
     print(chosenWeights)
   }
 
+  func onNextExercise() {
+  }
 
-  private var arrowsSize = 36.0
 
   var body: some View {
     ZStack {
@@ -67,39 +68,19 @@ struct WorkoutView: View {
 
         Spacer()
 
-
-        Button {
+        ChevronButton(.up) {
           baseWeight = min(baseWeight + weightDiff, allWeights.first!);
-        } label: {
-          Image(systemName: "chevron.up")
-            .resizable()
-            .scaledToFit()
-            .tint(.primary3)
-            .frame(width: arrowsSize, height: arrowsSize)
         }
         
         WeightScrollView(items: $allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
 
-        Button {
+        ChevronButton(.down) {
           baseWeight = max(baseWeight - weightDiff, allWeights.last ?? 0);
-        } label: {
-          Image(systemName: "chevron.down")
-            .resizable()
-            .scaledToFit()
-            .tint(.primary3)
-            .frame(width: arrowsSize, height: arrowsSize)
         }
 
         Spacer()
 
-        Button {
-          //          print(workout.exercises.count)
-          //          print(currentSet + 1)
-          //          if (workout.exercises.count > currentSet + 1) {
-          //            currentSet += 1;
-          //          }
-
-        } label: {
+        Button(action: onNextExercise) {
           HStack {
             Text("Next Exercise")
               .font(.system(size: 24))
