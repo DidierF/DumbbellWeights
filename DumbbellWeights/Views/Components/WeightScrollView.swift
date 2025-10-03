@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeightScrollView: View {
-  @Binding var items: [Int]
+  var items: [Int]
   @Binding var selectedItem: Int
 
   @State private var scrollCenter: Double = 0

@@ -10,6 +10,8 @@ import SwiftUI
 struct WorkoutView: View {
   // var workout = UpperBodyWorkout()
 
+  @Binding var exercises: [Exercise]
+
   @State var baseWeight = 35;
   var weightDiff = 5;
 
@@ -20,11 +22,9 @@ struct WorkoutView: View {
 
   @State var visibleWeights: [Int] = [];
 
-  @State var allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
+  var allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
 
-  init() {
-    chosenWeights = [];
-  }
+  @State var currentExercise: Int = 0
 
   func onWeightPress(_ weight: Int) {
     if (chosenWeights.count <= currentSet) {
@@ -36,6 +36,11 @@ struct WorkoutView: View {
   }
 
   func onNextExercise() {
+    if currentExercise >= exercises.count - 1 {
+      currentExercise = 0
+    } else {
+      currentExercise += 1
+    }
   }
 
 
@@ -46,7 +51,7 @@ struct WorkoutView: View {
         .ignoresSafeArea(.all)
 
       VStack {
-        Text("Chest Press")
+        Text(exercises[currentExercise].name)
           .font(.system(size: 48))
           .fontWeight(.bold)
           .foregroundStyle(Color.white)
@@ -72,7 +77,7 @@ struct WorkoutView: View {
           baseWeight = min(baseWeight + weightDiff, allWeights.first!);
         }
         
-        WeightScrollView(items: $allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
+        WeightScrollView(items: allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
 
         ChevronButton(.down) {
           baseWeight = max(baseWeight - weightDiff, allWeights.last ?? 0);
@@ -101,5 +106,5 @@ struct WorkoutView: View {
 }
 
 #Preview {
-  WorkoutView()
+  WorkoutView(exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]))
 }

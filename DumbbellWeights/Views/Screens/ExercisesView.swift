@@ -10,7 +10,7 @@ import SwiftData
 
 struct ExercisesView: View {
   @Query(sort: [SortDescriptor(\Exercise.name)]) var exercises: [Exercise]
-  @State var selected: [String] = []
+  @State var selected: [Exercise] = []
 
   init() {
     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
@@ -29,22 +29,39 @@ struct ExercisesView: View {
         ScrollView() {
           VStack {
             ForEach(exercises, id: \.id) { ex in
-              let isSelected = selected.contains(ex.name)
+              let isSelected = selected.contains(ex)
               ExerciseButton(
                 title: ex.name,
                 isSelected: isSelected) {
                   if isSelected {
-                    selected.remove(at: selected.firstIndex(of: ex.name)!)
+                    selected.remove(at: selected.firstIndex(of: ex)!)
                   } else {
-                    selected.append(ex.name)
+                    selected.append(ex)
                   }
                   print(selected)
-              }
+                }
             }
           }
         }
         .scrollIndicators(.hidden)
-
+      }
+      .overlay(alignment: .bottomTrailing) {
+        NavigationLink {
+          WorkoutView(exercises: $selected)
+        } label: {
+          Image(systemName: "arrow.right")
+            .resizable()
+            .scaledToFit()
+            .tint(.white)
+            .frame(width: 28)
+            .frame(width: 44, height: 44)
+            .padding(8)
+            .background(.primary2)
+            .clipShape(
+              Circle()
+            )
+            .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
+        }
       }
       .navigationTitle("Exercises")
     }
