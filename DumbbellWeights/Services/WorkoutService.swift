@@ -13,7 +13,11 @@ struct WorkoutService {
       "Biceps Curl",
       "Triceps Extension",
       "Military Press",
-      "Bent Over Flies"
+      "Bent Over Flies",
+      "Bulgarian Split Squat",
+      "Goblet Squat",
+      "Calf Raises",
+      "Romanian Deadlift",
     ]
   }
 }
