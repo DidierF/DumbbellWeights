@@ -9,7 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ExercisesView: View {
-  @Query() var exercises: [Exercise]
+  @Query(sort: [SortDescriptor(\Exercise.name)]) var exercises: [Exercise]
+  @State var selected: [String] = []
 
   init() {
     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
@@ -28,32 +29,28 @@ struct ExercisesView: View {
         ScrollView() {
           VStack {
             ForEach(exercises, id: \.self) { ex in
-              Button {
-                print(ex.name)
-              } label: {
-                Text(ex.name)
-                  .font(.system(size: 24))
-                  .fontWeight(.bold)
-                  .padding()
+              let isSelected = selected.contains(ex.name)
+              ExerciseButton(
+                title: ex.name,
+                isSelected: isSelected) {
+                  if isSelected {
+                    selected.remove(at: selected.firstIndex(of: ex.name)!)
+                  } else {
+                    selected.append(ex.name)
+                  }
+                  print(selected)
               }
             }
-            .frame(minWidth: 300, minHeight: 75)
-            .background(.primary2)
-            .foregroundStyle(.white)
-            .clipShape(RoundedRectangle(cornerSize: .init(width: 5, height: 5)))
-            .padding()
           }
         }
 
       }
       .navigationTitle("Exercises")
-//      .foregroundStyle(.white)
     }
-//    .foregroundStyle(.white)
-//    .tint(.white)
   }
 }
 
 #Preview {
   ExercisesView()
+    .modelContainer(DataController.previewContainer)
 }
