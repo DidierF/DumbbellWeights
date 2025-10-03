@@ -28,7 +28,7 @@ struct ExercisesView: View {
 
         ScrollView() {
           VStack {
-            ForEach(exercises, id: \.self) { ex in
+            ForEach(exercises, id: \.id) { ex in
               let isSelected = selected.contains(ex.name)
               ExerciseButton(
                 title: ex.name,
@@ -43,6 +43,7 @@ struct ExercisesView: View {
             }
           }
         }
+        .scrollIndicators(.hidden)
 
       }
       .navigationTitle("Exercises")
