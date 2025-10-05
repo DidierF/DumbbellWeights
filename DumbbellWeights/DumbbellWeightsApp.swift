@@ -13,7 +13,7 @@ struct DumbbellWeightsApp: App {
   var body: some Scene {
     WindowGroup {
       ExercisesView()
-        .modelContainer(for: [WorkoutTemplate.self, Exercise.self])
+        .modelContainer(for: [Exercise.self])
         .task {
           await PreloadData()
         }
