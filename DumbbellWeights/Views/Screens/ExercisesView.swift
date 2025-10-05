@@ -62,8 +62,12 @@ struct ExercisesView: View {
             )
             .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
         }
+        .disabled(selected.isEmpty)
       }
       .navigationTitle("Exercises")
+      .onAppear {
+        selected = []
+      }
     }
   }
 }

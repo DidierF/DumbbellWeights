@@ -7,39 +7,64 @@
 
 import SwiftUI
 
+
+let allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
+
 struct WorkoutView: View {
-  // var workout = UpperBodyWorkout()
+  @Environment(\.dismiss) var dismiss
 
   @Binding var exercises: [Exercise]
+  @State var baseWeight = 35
 
-  @State var baseWeight = 35;
-  var weightDiff = 5;
+  var numberOfSets = 3
 
-  var numberOfSets = 3;
-  @State var currentSet = 0;
+  @State var chosenWeights: [String: [Int]]
+  @State var currentIdx: Int = 0
 
-  @State var chosenWeights: [[Int]] = [];
+  init(exercises: Binding<[Exercise]>) {
+    self._exercises = exercises
 
-  @State var visibleWeights: [Int] = [];
-
-  var allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
-
-  @State var currentExercise: Int = 0
-
-  func onWeightPress(_ weight: Int) {
-    if (chosenWeights.count <= currentSet) {
-      chosenWeights.insert([weight], at: currentSet)
-    } else {
-      chosenWeights[currentSet].append(weight)
+    var initialWeights: [String: [Int]] = [:]
+    for ex in exercises {
+      initialWeights[ex.name.wrappedValue] = []
     }
-    print(chosenWeights)
+    _chosenWeights = State(initialValue: initialWeights)
   }
 
-  func onNextExercise() {
-    if currentExercise >= exercises.count - 1 {
-      currentExercise = 0
+  func onWeightPress(_ weight: Int) {
+    guard let exName = currentExercise?.name else {
+      return
+    }
+    chosenWeights[exName]?.append(weight)
+
+    if currentIdx >= exercises.count - 1 {
+      currentIdx = 0
     } else {
-      currentExercise += 1
+      currentIdx += 1
+    }
+  }
+
+  func onNextSet() {
+    dismiss()
+  }
+
+  var currentExercise: Exercise? {
+    get {
+      guard exercises.count > 0 else {
+        return nil
+      }
+      return exercises[currentIdx]
+    }
+  }
+
+  var setLog: String {
+    get {
+      guard let name = currentExercise?.name else {
+        return " "
+      }
+      return chosenWeights[name]?.reduce("") { partialResult, value in
+        "\(partialResult ?? "") \(value)"
+      } ?? " "
     }
   }
 
@@ -51,43 +76,32 @@ struct WorkoutView: View {
         .ignoresSafeArea(.all)
 
       VStack {
-        Text(exercises[currentExercise].name)
-          .font(.system(size: 48))
+        Text(currentExercise?.name ?? " ")
+          .font(.system(size: 32))
           .fontWeight(.bold)
           .foregroundStyle(Color.white)
           .padding()
 
-        HStack {
-          if chosenWeights.count > currentSet {
-            ForEach(chosenWeights[currentSet], id: \.self) { w in
-              Text(String(w))
-            }
-          } else {
-            Text(" ")
-          }
-        }
-        .font(.system(size: 24))
-        .foregroundStyle(Color.secondaryText)
-        .fontWeight(.medium)
-        .padding()
+
+        Text(setLog)
+          .font(.system(size: 24))
+          .foregroundStyle(Color.secondaryText)
+          .fontWeight(.medium)
+          .padding()
 
         Spacer()
 
-        ChevronButton(.up) {
-          baseWeight = min(baseWeight + weightDiff, allWeights.first!);
-        }
-        
+        ChevronButton(.up) {}
+
         WeightScrollView(items: allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
 
-        ChevronButton(.down) {
-          baseWeight = max(baseWeight - weightDiff, allWeights.last ?? 0);
-        }
+        ChevronButton(.down) {}
 
         Spacer()
 
-        Button(action: onNextExercise) {
+        Button(action: onNextSet) {
           HStack {
-            Text("Next Exercise")
+            Text("Finish Set")
               .font(.system(size: 24))
               .fontWeight(.bold)
               .foregroundStyle(Color.primary2)
