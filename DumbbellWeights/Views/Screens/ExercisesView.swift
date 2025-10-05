@@ -48,6 +48,7 @@ struct ExercisesView: View {
       .overlay(alignment: .bottomTrailing) {
         NavigationLink {
           WorkoutView(exercises: $selected)
+            .navigationBarBackButtonHidden()
         } label: {
           Image(systemName: "arrow.right")
             .resizable()
