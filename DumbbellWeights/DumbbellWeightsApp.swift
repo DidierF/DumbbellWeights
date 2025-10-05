@@ -12,11 +12,13 @@ import SwiftData
 struct DumbbellWeightsApp: App {
   var body: some Scene {
     WindowGroup {
-      ExercisesView()
-        .modelContainer(for: [Exercise.self])
-        .task {
-          await PreloadData()
-        }
+      NavigationStack {
+        ExercisesView()
+          .modelContainer(for: [Exercise.self])
+          .task {
+            await PreloadData()
+          }
+      }
     }
   }
 

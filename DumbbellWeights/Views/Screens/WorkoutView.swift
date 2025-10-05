@@ -70,11 +70,7 @@ struct WorkoutView: View {
 
 
   var body: some View {
-    ZStack {
-      Color
-        .background
-        .ignoresSafeArea(.all)
-
+    BackgroundView {
       VStack {
         Text(currentExercise?.name ?? " ")
           .font(.system(size: 32))

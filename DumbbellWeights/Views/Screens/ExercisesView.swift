@@ -20,55 +20,48 @@ struct ExercisesView: View {
   }
 
   var body: some View {
-    NavigationStack {
-      ZStack {
-        Color
-          .background
-          .ignoresSafeArea(.all)
-
-        ScrollView() {
-          VStack {
-            ForEach(exercises, id: \.id) { ex in
-              let isSelected = selected.contains(ex)
-              ExerciseButton(
-                title: ex.name,
-                isSelected: isSelected) {
-                  if isSelected {
-                    selected.remove(at: selected.firstIndex(of: ex)!)
-                  } else {
-                    selected.append(ex)
-                  }
-                  print(selected)
+    BackgroundView {
+      ScrollView() {
+        VStack {
+          ForEach(exercises, id: \.id) { ex in
+            let isSelected = selected.contains(ex)
+            ExerciseButton(
+              title: ex.name,
+              isSelected: isSelected) {
+                if isSelected {
+                  selected.remove(at: selected.firstIndex(of: ex)!)
+                } else {
+                  selected.append(ex)
                 }
-            }
+              }
           }
         }
-        .scrollIndicators(.hidden)
       }
-      .overlay(alignment: .bottomTrailing) {
-        NavigationLink {
-          WorkoutView(exercises: $selected)
-            .navigationBarBackButtonHidden()
-        } label: {
-          Image(systemName: "arrow.right")
-            .resizable()
-            .scaledToFit()
-            .tint(.white)
-            .frame(width: 28)
-            .frame(width: 44, height: 44)
-            .padding(8)
-            .background(.primary2)
-            .clipShape(
-              Circle()
-            )
-            .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
-        }
-        .disabled(selected.isEmpty)
+      .scrollIndicators(.hidden)
+    }
+    .overlay(alignment: .bottomTrailing) {
+      NavigationLink {
+        WorkoutView(exercises: $selected)
+          .navigationBarBackButtonHidden()
+      } label: {
+        Image(systemName: "arrow.right")
+          .resizable()
+          .scaledToFit()
+          .tint(.white)
+          .frame(width: 28)
+          .frame(width: 44, height: 44)
+          .padding(8)
+          .background(.primary2)
+          .clipShape(
+            Circle()
+          )
+          .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
       }
-      .navigationTitle("Exercises")
-      .onAppear {
-        selected = []
-      }
+      .disabled(selected.isEmpty)
+    }
+    .navigationTitle("Exercises")
+    .onAppear {
+      selected = []
     }
   }
 }
