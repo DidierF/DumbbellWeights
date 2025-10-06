@@ -12,19 +12,16 @@ import SwiftData
 struct DumbbellWeightsApp: App {
   var body: some Scene {
     WindowGroup {
-      NavigationStack {
-        ExercisesView()
-          .modelContainer(for: [Exercise.self])
-          .task {
-            await PreloadData()
-          }
-      }
+      HomeTabView()
+        .modelContainer(for: [Workout.self, ExerciseSet.self, Exercise.self])
+        .task {
+          await PreloadData()
+        }
     }
   }
 
   @MainActor
   private func PreloadData() async {
-
     let container = try! ModelContainer(for: Exercise.self)
     let context = ModelContext(container)
     let fetchDescriptor = FetchDescriptor<Exercise>()

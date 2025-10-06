@@ -27,3 +27,11 @@ class ExerciseSet {
     self.weight = weight
   }
 }
+
+@Model
+class Workout {
+  var date: Date = Date.now
+  var sets: [ExerciseSet] = []
+
+  init() {}
+}

@@ -11,9 +11,11 @@ import SwiftUI
 let allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
 
 struct WorkoutView: View {
+  @Environment(\.modelContext) var context
   @Environment(\.dismiss) var dismiss
 
   @Binding var exercises: [Exercise]
+  @Bindable var workout: Workout
   @State var baseWeight = 35
 
   var numberOfSets = 3
@@ -21,8 +23,9 @@ struct WorkoutView: View {
   @State var chosenWeights: [String: [Int]]
   @State var currentIdx: Int = 0
 
-  init(exercises: Binding<[Exercise]>) {
+  init(exercises: Binding<[Exercise]>, workout: Workout) {
     self._exercises = exercises
+    self.workout = workout
 
     var initialWeights: [String: [Int]] = [:]
     for ex in exercises {
@@ -36,6 +39,11 @@ struct WorkoutView: View {
       return
     }
     chosenWeights[exName]?.append(weight)
+
+    let set = ExerciseSet(exercise: currentExercise!, weight: baseWeight)
+
+    context.insert(set)
+    workout.sets.append(set)
 
     if currentIdx >= exercises.count - 1 {
       currentIdx = 0
@@ -115,6 +123,6 @@ struct WorkoutView: View {
   }
 }
 
-#Preview {
-  WorkoutView(exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]))
-}
+//#Preview {
+//  WorkoutView(exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]), workout: .constant(Workout()))
+//}
