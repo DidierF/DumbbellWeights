@@ -13,7 +13,6 @@ struct HomeTabView: View {
         Tab("Workout", systemImage: "dumbbell") {
           NavigationStack {
             ExercisesView()
-              .tabBarMinimizeBehavior(.automatic)
               .navigationTitle("Exercises")
           }
         }
