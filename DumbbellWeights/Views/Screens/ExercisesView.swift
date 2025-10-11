@@ -21,17 +21,16 @@ struct ExercisesView: View {
 
   @State var selected: [Exercise] = []
 
+  private let gridColumns = [GridItem(.flexible())]
+
   init() {
     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
-
-    UINavigationBar.appearance().barTintColor = UIColor.background
-    UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
   }
 
   var body: some View {
     BackgroundView {
       ScrollView() {
-        VStack {
+        LazyVGrid(columns: gridColumns) {
           ForEach(exercises, id: \.id) { ex in
             let isSelected = selected.contains(ex)
             ExerciseButton(
