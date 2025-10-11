@@ -8,24 +8,24 @@
 import SwiftUI
 
 struct HomeTabView: View {
-    var body: some View {
-      TabView {
-        Tab("Workout", systemImage: "dumbbell") {
-          NavigationStack {
-            ExercisesView()
-              .navigationTitle("Exercises")
-          }
+  var body: some View {
+    TabView {
+      Tab("Workout", systemImage: "dumbbell") {
+        NavigationStack {
+          ExercisesView()
+            .navigationTitle("Exercises")
         }
+      }
 
-        Tab("History", systemImage: "calendar") {
-          NavigationStack {
-            WorkoutsListView()
-          }
+      Tab("History", systemImage: "calendar") {
+        NavigationStack {
+          WorkoutsListView()
         }
       }
     }
+  }
 }
 
 #Preview {
-    HomeTabView()
+  HomeTabView()
 }
