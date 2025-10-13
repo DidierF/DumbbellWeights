@@ -73,19 +73,10 @@ struct ExercisesView: View {
             .toolbarVisibility(.hidden, for: .tabBar)
         }
       } label: {
-        Image(systemName: "arrow.right")
-          .resizable()
-          .scaledToFit()
-          .frame(width: 26)
-          .frame(width: 44, height: 44)
-          .padding(8)
-          .tint(.white)
-          .background(.primary2)
-          .clipShape(
-            Circle()
-          )
+        StartButton()
           .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
       }
+      .containerShape(.rect(cornerRadius: 32))
       .disabled(selected.isEmpty || workouts.isEmpty)
     }
     .onAppear {
