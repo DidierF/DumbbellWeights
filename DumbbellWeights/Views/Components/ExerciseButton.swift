@@ -14,32 +14,44 @@ struct ExerciseButton: View {
 
   let radius = 8
 
+  private var clipShapeForCurrentPlatform: some Shape {
+    if #available(iOS 26, *) {
+      return ConcentricRectangle(corners: .concentric)
+    } else {
+      return RoundedRectangle(cornerSize: .init(width: radius, height: radius))
+    }
+  }
+
   var body: some View {
     Button(action: action) {
       Text(title)
-        .font(.system(size: 24))
-        .fontWeight(isSelected ? .bold : .medium)
+        .font(.system(size: 24, weight: .bold, design: .rounded))
         .padding()
     }
-    .frame(minWidth: 300, minHeight: 75)
-    .background(isSelected ? .primary2 : .clear)
-    .foregroundStyle(.white)
-    .clipShape(
-      RoundedRectangle(cornerSize: .init(width: radius, height: radius))
-    )
-    .overlay(
-      RoundedRectangle(cornerSize: .init(width: radius, height: radius))
-        .stroke(isSelected ? .primary2 : .white, lineWidth: 2.0)
-    )
-    .padding()
+    .frame(height: 130)
+    .frame(maxWidth: .infinity, alignment: .center)
+    .background(isSelected ? .primary3 : .cardBackground)
+    .foregroundStyle(isSelected ? .white : .secondaryText)
+    .clipShape(clipShapeForCurrentPlatform)
     .animation(.default, value: isSelected)
   }
 }
 
 #Preview {
-  VStack {
-    ExerciseButton(title: "test1", isSelected: true, action: {})
-    ExerciseButton(title: "test1", isSelected: false, action: {})
+  ScrollView {
+    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), alignment: .leading, spacing: 16) {
+      ForEach(1...12, id: \.self) { idx in
+        ExerciseButton(
+          title: "This is the exercise \(idx)",
+          isSelected: idx.isMultiple(of: 2),
+          action: {
+          })
+      }
+    }
   }
+  .containerShape(.rect(cornerRadius: 44))
+  .padding([.top, .bottom], 24)
+  .padding([.leading, .trailing], 16)
   .background(Color.background)
+
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import UIKit
 import SwiftData
 
 struct ExercisesView: View {
@@ -21,16 +22,31 @@ struct ExercisesView: View {
 
   @State var selected: [Exercise] = []
 
-  private let gridColumns = [GridItem(.flexible())]
+  private let gridColumns = Array(repeating: GridItem(.flexible()), count: 2)
 
   init() {
-    UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    var largeTitleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+    let descriptor =
+      largeTitleFont
+      .fontDescriptor
+      .withDesign(.rounded)?
+      .withSymbolicTraits(.traitBold
+      )
+    largeTitleFont = UIFont(
+      descriptor: descriptor ?? largeTitleFont.fontDescriptor,
+      size: largeTitleFont.pointSize)
+
+    UINavigationBar
+      .appearance().largeTitleTextAttributes = [
+        .foregroundColor: UIColor.white,
+        .font: largeTitleFont
+      ]
   }
 
   var body: some View {
     BackgroundView {
       ScrollView() {
-        LazyVGrid(columns: gridColumns) {
+        LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 16) {
           ForEach(exercises, id: \.id) { ex in
             let isSelected = selected.contains(ex)
             ExerciseButton(
@@ -44,6 +60,8 @@ struct ExercisesView: View {
               }
           }
         }
+        .containerShape(.rect(cornerRadius: 44))
+        .padding([.leading, .trailing], 16)
       }
       .scrollIndicators(.hidden)
     }
@@ -83,6 +101,9 @@ struct ExercisesView: View {
 }
 
 #Preview {
-  ExercisesView()
-    .modelContainer(DataController.previewContainer)
+  NavigationStack {
+    ExercisesView()
+      .modelContainer(DataController.previewContainer)
+      .navigationTitle("Exercises")
+  }
 }

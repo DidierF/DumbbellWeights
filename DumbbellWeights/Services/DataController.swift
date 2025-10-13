@@ -14,7 +14,7 @@ class DataController {
       let config = ModelConfiguration(isStoredInMemoryOnly: true)
       let container = try ModelContainer(for: Exercise.self, configurations: config)
 
-      for i in 1...9 {
+      for i in 1...25 {
         let ex = Exercise("Exercise \(i)")
         container.mainContext.insert(ex)
       }
