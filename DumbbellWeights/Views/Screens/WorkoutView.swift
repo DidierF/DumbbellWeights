@@ -96,16 +96,14 @@ struct WorkoutView: View {
     BackgroundView {
       VStack {
         Text(currentExercise?.name ?? " ")
-          .font(.system(size: 32))
-          .fontWeight(.bold)
+          .font(.system(size: 32, weight: .bold, design: .rounded))
           .foregroundStyle(Color.white)
           .padding()
 
 
         Text(setLog)
-          .font(.system(size: 24))
+          .font(.system(size: 24, weight: .medium, design: .rounded))
           .foregroundStyle(Color.secondaryText)
-          .fontWeight(.medium)
           .padding()
 
         Spacer()
@@ -138,6 +136,9 @@ struct WorkoutView: View {
   }
 }
 
-//#Preview {
-//  WorkoutView(exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]), workout: .constant(Workout()))
-//}
+#Preview {
+  WorkoutView(
+    exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]),
+    workout: Workout()
+  )
+}
