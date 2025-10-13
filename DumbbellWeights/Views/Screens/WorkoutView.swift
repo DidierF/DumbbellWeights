@@ -91,6 +91,17 @@ struct WorkoutView: View {
     }
   }
 
+  var finishColor: Color {
+    switch currentSet {
+    case 0, 1:
+      return .primary3
+    case 2:
+      return .primary2
+    default:
+      return .primary1
+    }
+  }
+
 
   var body: some View {
     BackgroundView {
@@ -138,12 +149,12 @@ struct WorkoutView: View {
             Text("Finish Set")
               .font(.system(size: 24))
               .fontWeight(.bold)
-              .foregroundStyle(Color.primary2)
+              .foregroundStyle(finishColor)
 
             Image(systemName: "chevron.right")
               .resizable()
               .scaledToFit()
-              .tint(.primary2)
+              .tint(finishColor)
               .frame(width: 18, height: 18)
           }
         }
