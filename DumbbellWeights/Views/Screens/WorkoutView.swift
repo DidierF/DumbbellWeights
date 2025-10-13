@@ -18,10 +18,11 @@ struct WorkoutView: View {
   @Bindable var workout: Workout
   @State var baseWeight = 35
 
-  var numberOfSets = 3
+  let numberOfSets = 3
 
   @State var chosenWeights: [String: [Int]]
   @State var currentIdx: Int = 0
+  @State var currentSet: Int = 0
 
   init(exercises: Binding<[Exercise]>, workout: Workout) {
     self._exercises = exercises
@@ -29,24 +30,35 @@ struct WorkoutView: View {
 
     var initialWeights: [String: [Int]] = [:]
     for ex in exercises {
-      initialWeights[ex.name.wrappedValue] = []
+      initialWeights[ex.name.wrappedValue] = Array(
+        repeating: -1,
+        count: numberOfSets
+      )
     }
     _chosenWeights = State(initialValue: initialWeights)
   }
 
   func onWeightPress(_ weight: Int) {
-    guard let exName = currentExercise?.name else {
+    guard let exercise = currentExercise,
+          let exName = currentExercise?.name
+    else {
       return
     }
-    chosenWeights[exName]?.append(weight)
 
-    let set = ExerciseSet(exercise: currentExercise!, weight: baseWeight)
+    if currentSet < numberOfSets {
+      chosenWeights[exName]?[currentSet] = weight
+    } else {
+      chosenWeights[exName]?.append(weight)
+    }
+
+    let set = ExerciseSet(exercise: exercise, weight: baseWeight)
 
     context.insert(set)
     workout.sets.append(set)
 
     if currentIdx >= exercises.count - 1 {
       currentIdx = 0
+      currentSet += 1
     } else {
       currentIdx += 1
     }
@@ -67,12 +79,15 @@ struct WorkoutView: View {
 
   var setLog: String {
     get {
-      guard let name = currentExercise?.name else {
+      guard let name = currentExercise?.name,
+            let currentWeights = chosenWeights[name]
+      else {
         return " "
       }
-      return chosenWeights[name]?.reduce("") { partialResult, value in
-        "\(partialResult ?? "") \(value)"
-      } ?? " "
+      let initialRes = currentWeights.reduce("") { partialResult, value in
+        "\(partialResult) \(value == -1 ? "--" : "\(value)")"
+      }
+      return (initialRes).trimmingCharacters(in: .whitespaces)
     }
   }
 
