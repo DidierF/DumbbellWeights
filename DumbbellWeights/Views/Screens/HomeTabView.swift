@@ -23,9 +23,11 @@ struct HomeTabView: View {
         }
       }
     }
+    .tint(.primary3)
   }
 }
 
 #Preview {
   HomeTabView()
+    .modelContainer(DataController.previewContainer)
 }
