@@ -27,22 +27,8 @@ struct ExercisesView: View {
   private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 2)
 
   init() {
-    var largeTitleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
-    let descriptor =
-      largeTitleFont
-      .fontDescriptor
-      .withDesign(.rounded)?
-      .withSymbolicTraits(.traitBold
-      )
-    largeTitleFont = UIFont(
-      descriptor: descriptor ?? largeTitleFont.fontDescriptor,
-      size: largeTitleFont.pointSize)
-
     UINavigationBar
-      .appearance().largeTitleTextAttributes = [
-        .foregroundColor: UIColor.white,
-        .font: largeTitleFont
-      ]
+      .appearance().largeTitleTextAttributes = Helpers.getTitleAttributes()
   }
 
   var body: some View {
