@@ -22,7 +22,9 @@ struct ExercisesView: View {
 
   @State var selected: [Exercise] = []
 
-  private let gridColumns = Array(repeating: GridItem(.flexible()), count: 2)
+  let spacing: CGFloat = 12
+
+  private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 2)
 
   init() {
     var largeTitleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
@@ -46,7 +48,11 @@ struct ExercisesView: View {
   var body: some View {
     BackgroundView {
       ScrollView() {
-        LazyVGrid(columns: gridColumns, alignment: .leading, spacing: 16) {
+        LazyVGrid(
+          columns: gridColumns,
+          alignment: .leading,
+          spacing: spacing
+        ) {
           ForEach(exercises, id: \.id) { ex in
             let isSelected = selected.contains(ex)
             ExerciseButton(
@@ -60,8 +66,8 @@ struct ExercisesView: View {
               }
           }
         }
-        .containerShape(.rect(cornerRadius: 44))
-        .padding([.leading, .trailing], 16)
+        .containerShape(.rect(cornerRadius: 32))
+        .padding(.horizontal, 16)
       }
       .scrollIndicators(.hidden)
     }

@@ -39,7 +39,7 @@ struct ExerciseButton: View {
 
 #Preview {
   ScrollView {
-    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), alignment: .leading, spacing: 16) {
+    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), alignment: .leading, spacing: 8) {
       ForEach(1...12, id: \.self) { idx in
         ExerciseButton(
           title: "This is the exercise \(idx)",
@@ -49,9 +49,9 @@ struct ExerciseButton: View {
       }
     }
   }
-  .containerShape(.rect(cornerRadius: 44))
-  .padding([.top, .bottom], 24)
-  .padding([.leading, .trailing], 16)
+  .containerShape(.rect(cornerRadius: 32))
+  .padding(.vertical, 8)
+  .padding(.horizontal, 16)
   .background(Color.background)
 
 }
