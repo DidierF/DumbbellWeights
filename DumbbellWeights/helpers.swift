@@ -10,7 +10,7 @@ import UIKit
 
 struct Helpers {
   static func getTitleAttributes() -> [NSAttributedString.Key : Any] {
-    var largeTitleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+    let largeTitleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
     let descriptor =
     largeTitleFont
       .fontDescriptor
