@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-let allWeights = [100, 95, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 12, 10, 8, 5, 3, 2, 1, 0]
+let allWeights = [0, 1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
 
 struct WorkoutView: View {
   @Environment(\.modelContext) var context
