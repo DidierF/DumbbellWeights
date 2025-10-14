@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WeightScrollView: View {
   var items: [Int]
@@ -13,6 +14,8 @@ struct WeightScrollView: View {
 
   @State private var scrollCenter: Double = 0
   @State private var isScrolling: Bool = false
+
+  @Query private var lastSet: [ExerciseSet]
 
   let onWeightPress: (_:Int) -> Void
 
@@ -27,6 +30,25 @@ struct WeightScrollView: View {
 
   func onCenterChange(newCenter: Double) -> Void {
     scrollCenter = newCenter
+  }
+
+  init(
+    currentExercise: Exercise,
+    selectedItem: Binding<Int>,
+    onWeightPress: @escaping (_: Int) -> Void
+  ) {
+    self.items = allWeights
+    self._selectedItem = selectedItem
+    self.onWeightPress = onWeightPress
+    let currName = currentExercise.name
+    
+    _lastSet = Query(
+      filter: #Predicate<ExerciseSet> {
+        $0.exercise.name == currName
+      },
+      sort: \ExerciseSet.date,
+      order: .reverse,
+    )
   }
 
   var body: some View {
@@ -47,6 +69,14 @@ struct WeightScrollView: View {
         }
       }
     }
+    .onChange(of: lastSet
+              , { oldValue, newValue in
+      guard let lastWeight = newValue.first?.weight else {
+        selectedItem = defaultWeight
+        return
+      }
+      selectedItem = lastWeight
+    })
     .mask {
       VStack(spacing: 0) {
         LinearGradient(

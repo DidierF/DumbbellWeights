@@ -9,6 +9,7 @@ import SwiftUI
 
 
 let allWeights = [0, 1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
+let defaultWeight = 35
 
 struct WorkoutView: View {
   @Environment(\.modelContext) var context
@@ -16,7 +17,7 @@ struct WorkoutView: View {
 
   @Binding var exercises: [Exercise]
   @Bindable var workout: Workout
-  @State var baseWeight = 35
+  @State var baseWeight = defaultWeight
 
   let numberOfSets = 3
 
@@ -122,7 +123,7 @@ struct WorkoutView: View {
         ChevronButton(.up) {}
 
         WeightScrollView(
-          items: allWeights,
+          currentExercise: exercises[currentIdx],
           selectedItem: $baseWeight,
           onWeightPress: onWeightPress
         )
