@@ -121,24 +121,11 @@ struct WorkoutView: View {
 
         ChevronButton(.up) {}
 
-        WeightScrollView(items: allWeights, selectedItem: $baseWeight, onWeightPress: onWeightPress)
-          .mask {
-            VStack(spacing: 0) {
-              LinearGradient(
-                colors: [.clear, .black],
-                startPoint: .top,
-                endPoint: .bottom
-              )
-              .frame(height: 75)
-              Rectangle().fill(Color.black)
-              LinearGradient(
-                colors: [.clear, .black],
-                startPoint: .bottom,
-                endPoint: .top
-              )
-              .frame(height: 75)
-            }
-          }
+        WeightScrollView(
+          items: allWeights,
+          selectedItem: $baseWeight,
+          onWeightPress: onWeightPress
+        )
 
         ChevronButton(.down) {}
 
