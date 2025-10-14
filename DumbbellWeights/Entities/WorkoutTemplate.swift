@@ -21,6 +21,7 @@ class Exercise {
 class ExerciseSet {
   var exercise: Exercise
   var weight: Int
+  var date: Date = Date.now
 
   init(exercise: Exercise, weight: Int) {
     self.exercise = exercise
