@@ -64,7 +64,7 @@ struct WorkoutView: View {
     }
   }
 
-  func onNextSet() {
+  func onFinishSet() {
     dismiss()
   }
 
@@ -131,7 +131,7 @@ struct WorkoutView: View {
 
         Spacer()
 
-        Button(action: onNextSet) {
+        Button(action: onFinishSet) {
           HStack {
             Text("Finish Set")
               .font(.system(size: 24))
