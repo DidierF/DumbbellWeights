@@ -33,22 +33,24 @@ struct WeightScrollView: View {
   }
 
   init(
-    currentExercise: Exercise,
+    currentExercise: Exercise?,
     selectedItem: Binding<Int>,
     onWeightPress: @escaping (_: Int) -> Void
   ) {
     self.items = allWeights
     self._selectedItem = selectedItem
     self.onWeightPress = onWeightPress
-    let currName = currentExercise.name
-    
-    _lastSet = Query(
-      filter: #Predicate<ExerciseSet> {
-        $0.exercise.name == currName
-      },
-      sort: \ExerciseSet.date,
-      order: .reverse,
-    )
+    if let currentExercise = currentExercise {
+      let currName = currentExercise.name
+
+      _lastSet = Query(
+        filter: #Predicate<ExerciseSet> {
+          $0.exercise.name == currName
+        },
+        sort: \ExerciseSet.date,
+        order: .reverse,
+      )
+    }
   }
 
   var body: some View {

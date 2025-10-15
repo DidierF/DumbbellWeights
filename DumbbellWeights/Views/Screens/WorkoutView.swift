@@ -123,7 +123,7 @@ struct WorkoutView: View {
         ChevronButton(.up) {}
 
         WeightScrollView(
-          currentExercise: exercises[currentIdx],
+          currentExercise: currentExercise,
           selectedItem: $baseWeight,
           onWeightPress: onWeightPress
         )
