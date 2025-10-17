@@ -71,8 +71,7 @@ struct WeightScrollView: View {
         }
       }
     }
-    .onChange(of: lastSet
-              , { oldValue, newValue in
+    .onChange(of: lastSet, { oldValue, newValue in
       guard let lastWeight = newValue.first?.weight else {
         selectedItem = defaultWeight
         return
