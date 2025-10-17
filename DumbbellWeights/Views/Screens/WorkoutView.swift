@@ -95,11 +95,11 @@ struct WorkoutView: View {
   var finishColor: Color {
     switch currentSet {
     case 0, 1:
-      return .primary3
+      return .primary6
     case 2:
-      return .primary2
+      return .primary4
     default:
-      return .primary1
+      return .primary2
     }
   }
 
@@ -109,13 +109,13 @@ struct WorkoutView: View {
       VStack {
         Text(currentExercise?.name ?? " ")
           .font(.system(size: 32, weight: .bold, design: .rounded))
-          .foregroundStyle(Color.white)
+          .foregroundStyle(Color.primary1)
           .padding()
 
 
         Text(setLog)
           .font(.system(size: 24, weight: .medium, design: .rounded))
-          .foregroundStyle(Color.secondaryText)
+          .foregroundStyle(.primary2)
           .padding()
 
         Spacer()

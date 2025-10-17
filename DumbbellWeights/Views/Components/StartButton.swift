@@ -17,8 +17,8 @@ struct StartButton: View {
         .frame(width: 26)
         .frame(width: 44, height: 44)
         .padding(8)
-        .tint(.primary3)
-        .background(.primary2)
+        .tint(.primary1)
+        .background(.primary4)
         .glassEffect(.clear)
         .clipShape(
           ConcentricRectangle()
@@ -30,8 +30,8 @@ struct StartButton: View {
         .frame(width: 26)
         .frame(width: 44, height: 44)
         .padding(8)
-        .tint(.blue)
-        .background(.primary2)
+        .tint(.primary1)
+        .background(.primary4)
         .clipShape(
           Circle()
         )

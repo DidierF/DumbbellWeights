@@ -19,10 +19,10 @@ struct WeightButton: View {
       .padding()
       .foregroundStyle(Color.black)
       .frame(width: primary ? 187 : 135, height: primary ? 88 : 64)
-      .background(primary ? Color.primary1 : Color.primary2)
+      .background(primary ? Color.primary4 : Color.primary6)
       .cornerRadius(8)
       .id(title)
-      .animation(.default, value: primary)
+      .animation(.easeInOut, value: primary)
   }
 }
 
@@ -31,9 +31,13 @@ struct WeightButton: View {
     var title = "35"
 
     var body: some View {
-      WeightButton(title: String(40), action: {})
-      WeightButton(title: title, primary: true, action: {})
-      WeightButton(title: String(30), action: {})
+      BackgroundView {
+        VStack {
+          WeightButton(title: String(40), action: {})
+          WeightButton(title: title, primary: true, action: {})
+          WeightButton(title: String(30), action: {})
+        }
+      }
     }
   }
   return Preview()

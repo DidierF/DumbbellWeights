@@ -18,7 +18,7 @@ struct Helpers {
       .withSymbolicTraits(.traitBold
       )
     return [
-      .foregroundColor: UIColor.white,
+      .foregroundColor: UIColor.primary1,
       .font: UIFont(
         descriptor: descriptor ?? largeTitleFont.fontDescriptor,
         size: largeTitleFont.pointSize)

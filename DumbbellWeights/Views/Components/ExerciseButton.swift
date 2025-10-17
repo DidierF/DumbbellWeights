@@ -30,10 +30,11 @@ struct ExerciseButton: View {
     }
     .frame(height: 130)
     .frame(maxWidth: .infinity, alignment: .center)
-    .background(isSelected ? .primary3 : .cardBackground)
-    .foregroundStyle(isSelected ? .white : .secondaryText)
+    .background(isSelected ? .primary7 : .primary8)
+    .foregroundStyle(.primary1)
     .clipShape(clipShapeForCurrentPlatform)
-    .animation(.default, value: isSelected)
+    .scaleEffect(isSelected ? 1.02 : 1)
+    .animation(.spring, value: isSelected)
   }
 }
 
