@@ -45,7 +45,9 @@ struct CenteredScrollView<Content: View>: View {
         .scrollTargetBehavior(.viewAligned)
         .onChange(of: centeredItem, initial: true) {
           if !isScrolling {
-            proxy.scrollTo(centeredItem, anchor: .center)
+            withAnimation(.easeInOut) {
+              proxy.scrollTo(centeredItem, anchor: .center)
+            }
           }
         }
         .frame(width: outerGeoProxy.size.width)
