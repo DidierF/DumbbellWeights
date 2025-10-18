@@ -103,7 +103,6 @@ struct WorkoutView: View {
     }
   }
 
-
   var body: some View {
     BackgroundView {
       VStack {

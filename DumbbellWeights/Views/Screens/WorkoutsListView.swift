@@ -8,21 +8,12 @@
 import SwiftUI
 import SwiftData
 
-struct FormattedWorkout {
-  var title: String
-  var sets: [[Int]]
-}
-
 struct WorkoutsListView: View {
   @Query(sort: [SortDescriptor(\Workout.date)]) var workouts: [Workout]
 
   init() {
     UINavigationBar
       .appearance().largeTitleTextAttributes = Helpers.getTitleAttributes()
-  }
-
-  var formattedWorkouts: [FormattedWorkout] {
-    []
   }
 
   func formatSets(_ sets: [ExerciseSet]) -> [String: [Int]] {
