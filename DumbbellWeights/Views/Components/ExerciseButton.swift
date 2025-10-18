@@ -26,6 +26,7 @@ struct ExerciseButton: View {
     Button(action: action) {
       Text(title)
         .font(.system(size: 24, weight: .bold, design: .rounded))
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
     }
     .frame(height: 130)

@@ -13,16 +13,20 @@ struct WeightButton: View {
   var action: () -> Void
 
   var body: some View {
-    Button(title, action: action)
-      .font(.system(size: primary ? 40 : 32))
-      .fontWeight(.bold)
-      .padding()
-      .foregroundStyle(Color.black)
-      .frame(width: primary ? 187 : 135, height: primary ? 88 : 64)
-      .background(primary ? Color.primary4 : Color.primary6)
-      .cornerRadius(8)
-      .id(title)
-      .animation(.easeInOut, value: primary)
+    Button(action: action) {
+      Text(title)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundStyle(Color.background)
+        .font(.system(size: primary ? 40 : 32))
+        .fontWeight(.bold)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+    }
+    .frame(width: primary ? 187 : 135, height: primary ? 88 : 64)
+    .background(primary ? Color.primary4 : Color.primary6)
+    .cornerRadius(8)
+    .id(title)
+    .animation(.easeInOut, value: primary)
   }
 }
 
