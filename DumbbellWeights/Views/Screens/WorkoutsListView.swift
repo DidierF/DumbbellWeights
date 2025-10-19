@@ -17,7 +17,6 @@ struct WorkoutsListView: View {
   }
 
   func formatSets(_ sets: [ExerciseSet]) -> [String: [Int]] {
-
     var result: [String: [Int]] = [:]
 
     for aSet in sets {
@@ -34,42 +33,63 @@ struct WorkoutsListView: View {
 
   var body: some View {
     BackgroundView {
-      ScrollView {
+      ScrollView() {
         LazyVStack {
           ForEach(workouts) { workout in
-            Section(
-              header:
-                Text(workout.date.formatted())
+            VStack {
+              Text(workout.date.formatted())
                 .font(.system(size: 20, weight: .medium, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding([.leading, .top])
-            ) {
+
               let sets = formatSets(workout.sets)
-              VStack(alignment: .leading) {
-                ForEach(Array(sets.keys.sorted()), id: \.self) {key in
-                  HStack {
-                    Text("\(key)")
-                    ForEach(sets[key] ?? [], id: \.self) { aSet in
-                      Text("\(aSet)")
-                    }
-                  }
+              ForEach(Array(sets.keys.sorted()), id: \.self) {key in
+                SetRow(title: key, weights: sets[key] ?? [])
                   .frame(maxWidth: .infinity, alignment: .leading)
-                  .foregroundStyle(.primary1)
-                  .padding(.horizontal)
-                }
               }
-              .frame(maxWidth: .infinity)
             }
+            .padding()
+            .background(.primary9)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
           }
           .foregroundStyle(.primary1)
         }
       }
+      .padding(.horizontal)
       .scrollIndicators(.hidden)
     }
   }
 }
 
+struct SetRow: View {
+  var title: String
+  var weights: [Int]
+
+  var body: some View {
+    HStack(alignment: .top) {
+      Text("\(title)")
+        .font(.system(size: 14, weight: .regular, design: .rounded))
+        .padding(.top, 4)
+        .frame(width: 100)
+
+      LazyVGrid(columns: [GridItem(.adaptive(minimum: 36))]) {
+        ForEach(Array(weights.enumerated()), id: \.offset) { _, aSet in
+          Text("\(aSet)")
+            .padding(4)
+            .frame(alignment: .center)
+        }
+      }
+      .frame(maxWidth: .infinity)
+      .background(.primary8)
+      .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+    .foregroundStyle(.primary1)
+  }
+}
+
 #Preview {
+  //  BackgroundView {
+  //    SetRow(title: "test", weights: [2, 2, 2])
+  //  }
   NavigationStack {
     WorkoutsListView()
       .modelContainer(DataController.previewContainer)
