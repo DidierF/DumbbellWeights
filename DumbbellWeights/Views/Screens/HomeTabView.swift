@@ -17,9 +17,10 @@ struct HomeTabView: View {
         }
       }
 
-      Tab("History", systemImage: "calendar") {
+      Tab("Log", systemImage: "calendar") {
         NavigationStack {
           WorkoutsListView()
+            .navigationTitle("Log")
         }
       }
     }

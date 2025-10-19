@@ -33,28 +33,30 @@ struct WorkoutsListView: View {
 
   var body: some View {
     BackgroundView {
-      ScrollView() {
-        LazyVStack {
-          ForEach(workouts) { workout in
-            VStack {
-              Text(workout.date.formatted())
-                .font(.system(size: 20, weight: .medium, design: .rounded))
-                .frame(maxWidth: .infinity, alignment: .leading)
+      List {
+        ForEach(workouts) { workout in
+          Section {
+            Text(workout.date.formatted())
+              .font(.system(size: 20, weight: .medium, design: .rounded))
+              .frame(maxWidth: .infinity, alignment: .leading)
 
-              let sets = formatSets(workout.sets)
-              ForEach(Array(sets.keys.sorted()), id: \.self) {key in
-                SetRow(title: key, weights: sets[key] ?? [])
-                  .frame(maxWidth: .infinity, alignment: .leading)
-              }
+            let sets = formatSets(workout.sets)
+            ForEach(Array(sets.keys.sorted()), id: \.self) {key in
+              SetRow(title: key, weights: sets[key] ?? [])
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding()
-            .background(.primary9)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
           }
-          .foregroundStyle(.primary1)
+          .listRowBackground(Color.primary9)
+          .listSectionSeparator(.hidden)
+          .listRowSeparator(.hidden)
         }
+        .listSectionSeparator(.hidden)
+        .listRowSeparator(.hidden)
+        .foregroundStyle(.primary1)
       }
-      .padding(.horizontal)
+      .listSectionSeparator(.hidden)
+      .listRowSeparator(.hidden)
+      .scrollContentBackground(.hidden)
       .scrollIndicators(.hidden)
     }
   }
