@@ -23,6 +23,11 @@ struct HomeTabView: View {
             .navigationTitle("Log")
         }
       }
+
+      Tab("Progress", systemImage: "chart.xyaxis.line") {
+        GraphView()
+          .navigationTitle("Progress")
+      }
     }
     .tint(.primary3)
   }
