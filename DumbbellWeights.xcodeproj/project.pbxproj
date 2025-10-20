@@ -392,7 +392,7 @@
 		680BBC6E2E613B4000D716B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "dumblog icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DumbbellWeights/DumbbellWeights.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -435,7 +435,7 @@
 		680BBC6F2E613B4000D716B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "dumblog icon";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DumbbellWeights/DumbbellWeights.entitlements;
 				CODE_SIGN_STYLE = Automatic;
