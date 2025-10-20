@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct WorkoutsListView: View {
+  @Environment(\.modelContext) private var modelContext
+
   @Query(sort: [SortDescriptor(\Workout.date)]) var workouts: [Workout]
 
   init() {
@@ -31,6 +33,13 @@ struct WorkoutsListView: View {
 
   }
 
+  func deleteWorkout(at indexSet: IndexSet) {
+    for index in indexSet {
+      modelContext.delete(workouts[index])
+    }
+    try? modelContext.save()
+  }
+
   var body: some View {
     BackgroundView {
       List {
@@ -50,6 +59,7 @@ struct WorkoutsListView: View {
           .listSectionSeparator(.hidden)
           .listRowSeparator(.hidden)
         }
+        .onDelete(perform: deleteWorkout)
         .listSectionSeparator(.hidden)
         .listRowSeparator(.hidden)
         .foregroundStyle(.primary1)
