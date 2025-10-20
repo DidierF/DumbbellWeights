@@ -11,7 +11,7 @@ import SwiftData
 struct WorkoutsListView: View {
   @Environment(\.modelContext) private var modelContext
 
-  @Query(sort: [SortDescriptor(\Workout.date)]) var workouts: [Workout]
+  @Query(sort: [SortDescriptor(\Workout.date, order: .reverse)]) var workouts: [Workout]
 
   init() {
     UINavigationBar
