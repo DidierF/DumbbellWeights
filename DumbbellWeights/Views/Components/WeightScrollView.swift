@@ -56,6 +56,8 @@ struct WeightScrollView: View {
   var body: some View {
     CenteredScrollView(onCenterChange: onCenterChange, initialItem: $selectedItem, isScrolling: $isScrolling) {
       LazyVStack {
+        Spacer(minLength: 64 * 3)
+
         ForEach(items, id: \.self) { weight in
           WeightButton(title: String(weight), primary: weight == selectedItem) {
             onWeightPress(weight)
@@ -69,6 +71,8 @@ struct WeightScrollView: View {
             }
           }
         }
+
+        Spacer(minLength: 64 * 3)
       }
     }
     .onChange(of: lastSet, { oldValue, newValue in
@@ -95,5 +99,11 @@ struct WeightScrollView: View {
         .frame(height: 75)
       }
     }
+  }
+}
+
+#Preview {
+  BackgroundView {
+    WeightScrollView(currentExercise: Exercise("Test 1"), selectedItem: .constant(0), onWeightPress: { _ in })
   }
 }
