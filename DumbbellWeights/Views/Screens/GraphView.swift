@@ -39,7 +39,8 @@ struct GraphView: View {
         }
 
         Chart {
-          LineMark(x: .value("10/10/25", 5), y: .value("", 5))
+          LineMark(x: .value("", 5), y: .value("", 5))
+            .interpolationMethod(.cardinal)
           LineMark(x: .value("", 6), y: .value("", 5))
           LineMark(x: .value("", 7), y: .value("", 6))
           LineMark(x: .value("", 8), y: .value("", 6))
