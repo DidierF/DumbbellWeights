@@ -22,6 +22,7 @@ class Muscle {
 class Exercise {
   var name: String
   var muscle: Muscle?
+  var sets: [ExerciseSet]?
 
   init(_ name: String, muscle: Muscle) {
     self.name = name
@@ -31,7 +32,7 @@ class Exercise {
 
 @Model
 class ExerciseSet {
-  var exercise: Exercise
+  @Relationship(inverse: \Exercise.sets) var exercise: Exercise
   var weight: Int
   var date: Date = Date.now
 
