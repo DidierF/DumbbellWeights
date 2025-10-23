@@ -22,20 +22,39 @@ struct DumbbellWeightsApp: App {
 
   @MainActor
   private func PreloadData() async {
-    let container = try! ModelContainer(for: Exercise.self)
+    let container = try! ModelContainer(for: Exercise.self, Muscle.self)
     let context = ModelContext(container)
     let fetchDescriptor = FetchDescriptor<Exercise>()
+    let muscleDescriptor = FetchDescriptor<Muscle>()
 
     let currentExercises = try? context.fetch(fetchDescriptor)
+    var currentMuscles = try? context.fetch(muscleDescriptor)
 
     let allExercises = WorkoutService().GetExercises()
 
     for exercise in allExercises {
-      if !currentExercises!.contains(where: { e in
-        e.name == exercise
-      }) {
-        let newEx = Exercise(exercise)
+      let name = exercise[0]
+      let muscleName = exercise[1]
+
+      var muscle = currentMuscles!.first(where: { m in
+        m.name == muscleName
+      })
+
+      if muscle == nil {
+        muscle = Muscle(muscleName)
+        context.insert(muscle!)
+        currentMuscles = try? context.fetch(muscleDescriptor)
+      }
+
+      let storedExercise = currentExercises!.first { e in
+        e.name == name
+      }
+
+      if storedExercise == nil {
+        let newEx = Exercise(name, muscle: muscle!)
         context.insert(newEx)
+      } else {
+        storedExercise?.muscle = muscle!
       }
     }
   }

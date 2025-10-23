@@ -6,18 +6,18 @@
 //
 
 struct WorkoutService {
-  func GetExercises() -> [String] {
+  func GetExercises() -> [[String]] {
     return [
-      "Chest Press",
-      "Bent Over Rows",
-      "Biceps Curl",
-      "Triceps Extension",
-      "Military Press",
-      "Bent Over Flies",
-      "Bulgarian Split Squat",
-      "Goblet Squat",
-      "Calf Raises",
-      "Romanian Deadlift",
+      ["Chest Press", "Chest"],
+      ["Bent Over Rows", "Back"],
+      ["Biceps Curl", "Biceps"],
+      ["Triceps Extension", "Triceps"],
+      ["Military Press", "Shoulders"],
+      ["Bent Over Flies", "Shoulders"],
+      ["Bulgarian Split Squat", "Legs"],
+      ["Goblet Squat", "Legs"],
+      ["Calf Raises", "Legs"],
+      ["Romanian Deadlift", "Legs"],
     ]
   }
 }

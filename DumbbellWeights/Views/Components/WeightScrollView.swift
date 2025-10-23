@@ -104,6 +104,6 @@ struct WeightScrollView: View {
 
 #Preview {
   BackgroundView {
-    WeightScrollView(currentExercise: Exercise("Test 1"), selectedItem: .constant(0), onWeightPress: { _ in })
+    WeightScrollView(currentExercise: Exercise("Test 1", muscle: Muscle("Test Muscle")), selectedItem: .constant(0), onWeightPress: { _ in })
   }
 }

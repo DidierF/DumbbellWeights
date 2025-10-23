@@ -153,7 +153,13 @@ struct WorkoutView: View {
 
 #Preview {
   WorkoutView(
-    exercises: .constant([Exercise("Chest Press"), Exercise("Rows")]),
+    exercises:
+        .constant(
+          [
+            Exercise("Chest Press", muscle: Muscle("Chest")),
+            Exercise("Rows", muscle: Muscle("Chest"))
+          ]
+        ),
     workout: Workout()
   )
 }

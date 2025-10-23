@@ -16,6 +16,7 @@ struct ExercisesView: View {
   @Environment(\.modelContext) private var context
 
   @Query(sort: [SortDescriptor(\Exercise.name)]) var exercises: [Exercise]
+  @Query(sort: [SortDescriptor(\Muscle.name)]) var muscles: [Muscle]
 
   @Query(filter: #Predicate<Workout> { $0.date >= startOfToday && $0.date < startOfTomorrow })
   var workouts: [Workout]
@@ -33,23 +34,34 @@ struct ExercisesView: View {
 
   var body: some View {
     BackgroundView {
-      ScrollView() {
+      ScrollView {
         LazyVGrid(
           columns: gridColumns,
           alignment: .leading,
-          spacing: spacing
+          spacing: spacing,
+          pinnedViews: .sectionHeaders
         ) {
-          ForEach(exercises, id: \.id) { ex in
-            let isSelected = selected.contains(ex)
-            ExerciseButton(
-              title: ex.name,
-              isSelected: isSelected) {
-                if isSelected {
-                  selected.remove(at: selected.firstIndex(of: ex)!)
-                } else {
-                  selected.append(ex)
-                }
+          ForEach(muscles, id: \.id) { muscle in
+            Section {
+              ForEach(muscle.exercises ?? [], id: \.id) { ex in
+                let isSelected = selected.contains(ex)
+                ExerciseButton(
+                  title: ex.name,
+                  isSelected: isSelected) {
+                    if isSelected {
+                      selected.remove(at: selected.firstIndex(of: ex)!)
+                    } else {
+                      selected.append(ex)
+                    }
+                  }
               }
+            } header: {
+              Text(muscle.name)
+                .foregroundStyle(Color.primary4)
+                .gridCellColumns(2)
+                .font(.system(size: 28, weight: .medium, design: .rounded))
+            }
+
           }
         }
         .containerShape(.rect(cornerRadius: 32))

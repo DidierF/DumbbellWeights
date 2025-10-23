@@ -9,11 +9,23 @@ import Foundation
 import SwiftData
 
 @Model
-class Exercise {
+class Muscle {
   var name: String
+  var exercises: [Exercise]?
 
   init(_ name: String) {
     self.name = name
+  }
+}
+
+@Model
+class Exercise {
+  var name: String
+  var muscle: Muscle?
+
+  init(_ name: String, muscle: Muscle) {
+    self.name = name
+    self.muscle = muscle
   }
 }
 
