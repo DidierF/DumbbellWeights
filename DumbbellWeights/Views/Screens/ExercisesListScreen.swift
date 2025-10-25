@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//import UIKit
 import SwiftData
 
 struct ExercisesListScreen: View {
@@ -23,6 +22,8 @@ struct ExercisesListScreen: View {
 
   @State var selected: [Exercise] = []
 
+  @State var filterMuscle: Muscle?
+
   let spacing: CGFloat = 12
 
   private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 2)
@@ -32,40 +33,57 @@ struct ExercisesListScreen: View {
       .appearance().largeTitleTextAttributes = Helpers.getTitleAttributes()
   }
 
+  var exerciseGrid: some View {
+    LazyVGrid(
+      columns: gridColumns,
+      alignment: .leading,
+      spacing: spacing,
+    ) {
+      ForEach(
+        muscles.filter({ $0.id == filterMuscle?.id ?? $0.id }),
+        id: \.id
+      ) { muscle in
+        Section {
+          ForEach(muscle.exercises ?? [], id: \.id) { ex in
+            let isSelected = selected.contains(ex)
+            ExerciseButton(
+              title: ex.name,
+              isSelected: isSelected) {
+                if isSelected {
+                  selected.remove(at: selected.firstIndex(of: ex)!)
+                } else {
+                  selected.append(ex)
+                }
+              }
+          }
+        } header: {
+          Text(muscle.name)
+            .foregroundStyle(Color.primary4)
+            .gridCellColumns(2)
+            .font(.system(size: 28, weight: .medium, design: .rounded))
+        }
+      }
+    }
+    .containerShape(.rect(cornerRadius: 32))
+    .padding(.horizontal, 16)
+    .animation(.spring, value: filterMuscle)
+  }
+
   var body: some View {
     BackgroundView {
       ScrollView {
-        LazyVGrid(
-          columns: gridColumns,
-          alignment: .leading,
-          spacing: spacing,
-          pinnedViews: .sectionHeaders
-        ) {
-          ForEach(muscles, id: \.id) { muscle in
-            Section {
-              ForEach(muscle.exercises ?? [], id: \.id) { ex in
-                let isSelected = selected.contains(ex)
-                ExerciseButton(
-                  title: ex.name,
-                  isSelected: isSelected) {
-                    if isSelected {
-                      selected.remove(at: selected.firstIndex(of: ex)!)
-                    } else {
-                      selected.append(ex)
-                    }
-                  }
-              }
-            } header: {
-              Text(muscle.name)
-                .foregroundStyle(Color.primary4)
-                .gridCellColumns(2)
-                .font(.system(size: 28, weight: .medium, design: .rounded))
+        MuscleFilterView(
+          options: muscles,
+          selected: filterMuscle) { m in
+            if (filterMuscle == m) {
+              filterMuscle = nil
+            } else {
+              filterMuscle = m
             }
-
           }
-        }
-        .containerShape(.rect(cornerRadius: 32))
-        .padding(.horizontal, 16)
+          .contentMargins(.horizontal, 16)
+
+        exerciseGrid
       }
       .scrollIndicators(.hidden)
     }
