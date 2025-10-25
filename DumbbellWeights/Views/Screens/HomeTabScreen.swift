@@ -1,5 +1,5 @@
 //
-//  HomeTabView.swift
+//  HomeTabScreen.swift
 //  DumbbellWeights
 //
 //  Created by Didier on 10/5/25.
@@ -7,26 +7,26 @@
 
 import SwiftUI
 
-struct HomeTabView: View {
+struct HomeTabScreen: View {
   var body: some View {
     TabView {
       Tab("Workout", systemImage: "dumbbell") {
         NavigationStack {
-          ExercisesView()
+          ExercisesListScreen()
             .navigationTitle("Exercises")
         }
       }
 
       Tab("Log", systemImage: "calendar") {
         NavigationStack {
-          WorkoutsListView()
+          WorkoutsListScreen()
             .navigationTitle("Log")
         }
       }
 
       Tab("Progress", systemImage: "chart.xyaxis.line") {
         NavigationStack {
-          GraphView()
+          ProgressListScreen()
             .navigationTitle("Progress")
         }
       }
@@ -36,6 +36,6 @@ struct HomeTabView: View {
 }
 
 #Preview {
-  HomeTabView()
+  HomeTabScreen()
     .modelContainer(DataController.previewContainer)
 }

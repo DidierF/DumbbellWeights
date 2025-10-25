@@ -1,5 +1,5 @@
 //
-//  ExercisesView.swift
+//  ExercisesListScreen.swift
 //  DumbbellWeights
 //
 //  Created by Didier on 10/1/25.
@@ -9,7 +9,7 @@ import SwiftUI
 //import UIKit
 import SwiftData
 
-struct ExercisesView: View {
+struct ExercisesListScreen: View {
   static let startOfToday = Calendar.current.startOfDay(for: Date())
   static let startOfTomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))!
 
@@ -72,7 +72,7 @@ struct ExercisesView: View {
     .overlay(alignment: .bottomTrailing) {
       NavigationLink {
         if let workout = workouts.first {
-          WorkoutView(exercises: $selected, workout: workout)
+          WorkoutScreen(exercises: $selected, workout: workout)
             .navigationBarBackButtonHidden()
             .toolbarVisibility(.hidden, for: .tabBar)
         }
@@ -97,7 +97,7 @@ struct ExercisesView: View {
 
 #Preview {
   NavigationStack {
-    ExercisesView()
+    ExercisesListScreen()
       .modelContainer(DataController.previewContainer)
       .navigationTitle("Exercises")
   }

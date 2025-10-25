@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  WorkoutScreen.swift
 //  DumbbellWeights
 //
 //  Created by Didier on 8/28/25.
@@ -11,7 +11,7 @@ import SwiftUI
 let allWeights = [0, 1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
 let defaultWeight = 35
 
-struct WorkoutView: View {
+struct WorkoutScreen: View {
   @Environment(\.modelContext) var context
   @Environment(\.dismiss) var dismiss
 
@@ -152,7 +152,7 @@ struct WorkoutView: View {
 }
 
 #Preview {
-  WorkoutView(
+  WorkoutScreen(
     exercises:
         .constant(
           [

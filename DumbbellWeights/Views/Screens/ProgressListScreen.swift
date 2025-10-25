@@ -1,5 +1,5 @@
 //
-//  GraphView.swift
+//  ProgressListScreen.swift
 //  DumbbellWeights
 //
 //  Created by Didier on 10/20/25.
@@ -16,7 +16,7 @@ enum GraphType: String, CaseIterable, Identifiable {
   var id: Self { self }
 }
 
-struct GraphView: View {
+struct ProgressListScreen: View {
 
   @State var currentGraph: GraphType = .max
 
@@ -87,7 +87,7 @@ struct GraphView: View {
 
 #Preview {
   NavigationStack {
-    GraphView()
+    ProgressListScreen()
       .modelContainer(DataController.previewContainer)
       .navigationTitle("Progress")
   }

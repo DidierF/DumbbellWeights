@@ -1,5 +1,5 @@
 //
-//  WorkoutsListView.swift
+//  WorkoutsListScreen.swift
 //  DumbbellWeights
 //
 //  Created by Didier on 10/5/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct WorkoutsListView: View {
+struct WorkoutsListScreen: View {
   @Environment(\.modelContext) private var modelContext
 
   @Query(sort: [SortDescriptor(\Workout.date, order: .reverse)]) var workouts: [Workout]
@@ -103,7 +103,7 @@ struct SetRow: View {
   //    SetRow(title: "test", weights: [2, 2, 2])
   //  }
   NavigationStack {
-    WorkoutsListView()
+    WorkoutsListScreen()
       .modelContainer(DataController.previewContainer)
       .navigationTitle("Workouts")
   }
