@@ -25,7 +25,7 @@ class DataController {
 
       var exercises: [Exercise] = []
 
-      for i in 1...25 {
+      for i in 1...15 {
         let ex = Exercise(
           "Exercise \(i)",
           muscle: [muscle1, muscle2, muscle3, muscle4].randomElement()!
