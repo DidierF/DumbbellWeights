@@ -25,8 +25,10 @@ struct HomeTabView: View {
       }
 
       Tab("Progress", systemImage: "chart.xyaxis.line") {
-        GraphView()
-          .navigationTitle("Progress")
+        NavigationStack {
+          GraphView()
+            .navigationTitle("Progress")
+        }
       }
     }
     .tint(.primary3)
