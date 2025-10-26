@@ -147,6 +147,12 @@ struct WorkoutScreen: View {
         }
         .padding()
       }
+      .onAppear {
+        UIApplication.shared.isIdleTimerDisabled = true
+      }
+      .onDisappear {
+        UIApplication.shared.isIdleTimerDisabled = false
+      }
     }
   }
 }
