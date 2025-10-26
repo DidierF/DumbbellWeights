@@ -1,0 +1,48 @@
+{
+  "fill" : {
+    "solid" : "srgb:0.05098,0.05882,0.05490,1.00000"
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "blend-mode" : "normal",
+          "hidden" : false,
+          "image-name" : "Group 24.png",
+          "name" : "Group 24",
+          "position" : {
+            "scale" : 1.05,
+            "translation-in-points" : [
+              -19.5234375,
+              27.78125
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "Group 25.png",
+          "name" : "Group 25",
+          "position" : {
+            "scale" : 1,
+            "translation-in-points" : [
+              4.5703125,
+              140.8671875
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
