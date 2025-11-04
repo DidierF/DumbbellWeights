@@ -82,6 +82,7 @@ struct ProgressListScreen: View {
       .listStyle(.plain)
       .scrollIndicators(.hidden)
     }
+    .trackScreen(Screens.ProgressList.rawValue)
   }
 }
 

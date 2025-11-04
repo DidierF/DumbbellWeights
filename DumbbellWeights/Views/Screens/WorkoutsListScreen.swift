@@ -69,6 +69,7 @@ struct WorkoutsListScreen: View {
       .scrollContentBackground(.hidden)
       .scrollIndicators(.hidden)
     }
+    .trackScreen(Screens.WorkoutList.rawValue)
   }
 }
 

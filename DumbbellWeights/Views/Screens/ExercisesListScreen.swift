@@ -110,6 +110,7 @@ struct ExercisesListScreen: View {
         context.insert(initWorkout)
       }
     }
+    .trackScreen(Screens.ExerciseList.rawValue)
   }
 }
 

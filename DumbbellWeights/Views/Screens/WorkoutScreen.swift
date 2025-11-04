@@ -153,6 +153,7 @@ struct WorkoutScreen: View {
       .onDisappear {
         UIApplication.shared.isIdleTimerDisabled = false
       }
+      .trackScreen(Screens.Workout.rawValue)
     }
   }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct ProgressDetailScreen: View {
   var exercise: Exercise
@@ -36,5 +37,11 @@ struct ProgressDetailScreen: View {
         }
     }
     .navigationBarTitleDisplayMode(.inline)
+    .trackScreen(Screens.ProgressDetail.rawValue)
+    .onAppear {
+      Analytics.logEvent("Progress Detail Exercise", parameters: [
+        "Exercise": exercise.name
+      ])
+    }
   }
 }
