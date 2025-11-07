@@ -17,5 +17,6 @@ class ExerciseSet {
   init(exercise: Exercise, weight: Int) {
     self.exercise = exercise
     self.weight = weight
+    self.exercise.updated = .now
   }
 }

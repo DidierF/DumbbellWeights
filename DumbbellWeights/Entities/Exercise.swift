@@ -13,6 +13,7 @@ class Exercise {
   var name: String
   var muscle: Muscle?
   var sets: [ExerciseSet]?
+  var updated: Date = Date.now
 
   var sortedSets: [ExerciseSet] {
     sets?.sorted(by: { $0.date < $1.date }) ?? []

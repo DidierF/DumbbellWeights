@@ -24,7 +24,7 @@ struct ProgressListScreen: View {
   @State var topWeight: Int = 0
   @State var minWeight: Int = 0
 
-  @Query(sort: [SortDescriptor(\Exercise.name)]) var exercises: [Exercise]
+  @Query(sort: [SortDescriptor(\Exercise.updated, order: .reverse)]) var exercises: [Exercise]
   @Query var exerciseSets: [ExerciseSet]
 
   @State var selectedExercise: Exercise?
