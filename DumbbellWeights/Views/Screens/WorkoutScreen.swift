@@ -24,6 +24,7 @@ struct WorkoutScreen: View {
   @State var chosenWeights: [String: [Int]]
   @State var currentIdx: Int = 0
   @State var currentSet: Int = 0
+  @State var animating: Bool = false
 
   init(exercises: Binding<[Exercise]>, workout: Workout) {
     self._exercises = exercises
@@ -40,6 +41,8 @@ struct WorkoutScreen: View {
   }
 
   func onWeightPress(_ weight: Int) {
+    guard !animating && !isScrolling else { return }
+    animating = true
     guard let exercise = currentExercise,
           let exName = currentExercise?.name
     else {
@@ -57,11 +60,14 @@ struct WorkoutScreen: View {
     context.insert(set)
     workout.sets.append(set)
 
-    if currentIdx >= exercises.count - 1 {
-      currentIdx = 0
-      currentSet += 1
-    } else {
-      currentIdx += 1
+    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+      if currentIdx >= exercises.count - 1 {
+        currentIdx = 0
+        currentSet += 1
+      } else {
+        currentIdx += 1
+      }
+      animating = false
     }
   }
 
@@ -110,12 +116,14 @@ struct WorkoutScreen: View {
           .font(.system(size: 32, weight: .bold, design: .rounded))
           .foregroundStyle(Color.primary1)
           .padding()
+          .animation(.easeInOut(duration: 0.4), value: currentExercise?.name)
 
 
         Text(setLog)
           .font(.system(size: 24, weight: .medium, design: .rounded))
           .foregroundStyle(.primary2)
           .padding()
+          .animation(.easeOut(duration: 0.4), value: setLog)
 
         Spacer()
 
@@ -143,6 +151,7 @@ struct WorkoutScreen: View {
               .scaledToFit()
               .tint(finishColor)
               .frame(width: 18, height: 18)
+              .animation(.spring, value: finishColor)
           }
         }
         .padding()
