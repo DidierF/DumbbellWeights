@@ -41,7 +41,7 @@ struct WorkoutScreen: View {
   }
 
   func onWeightPress(_ weight: Int) {
-    guard !animating && !isScrolling else { return }
+    guard !animating else { return }
     animating = true
     guard let exercise = currentExercise,
           let exName = currentExercise?.name
