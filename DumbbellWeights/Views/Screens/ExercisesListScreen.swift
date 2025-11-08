@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAnalytics
 
 struct ExercisesListScreen: View {
   static let startOfToday = Calendar.current.startOfDay(for: Date())
@@ -100,6 +101,9 @@ struct ExercisesListScreen: View {
       }
       .containerShape(.rect(cornerRadius: 32))
       .disabled(selected.isEmpty || workouts.isEmpty)
+      .onTapGesture {
+        Analytics.logEvent(Events.WorksoutStarted.rawValue, parameters: ["Exercises": $selected.map({ $0.name })])
+      }
     }
     .onAppear {
       selected = []

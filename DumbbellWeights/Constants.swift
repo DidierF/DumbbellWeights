@@ -13,3 +13,9 @@ enum Screens: String {
   case Workout = "Workout"
   case WorkoutList = "WorkoutList"
 }
+
+enum Events: String {
+  case WorksoutStarted = "WorkoutStarted"
+  case WorkoutEnded = "WorkoutEnded"
+  case WeightLogged = "WeightLogged"
+}

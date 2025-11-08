@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 
 let allWeights = [0, 1, 2, 3, 5, 8, 10, 12, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
 let defaultWeight = 35
@@ -60,6 +60,12 @@ struct WorkoutScreen: View {
     context.insert(set)
     workout.sets.append(set)
 
+    Analytics
+      .logEvent(
+        Events.WeightLogged.rawValue,
+        parameters: ["Exercise": exercise.name, "Weight": set.weight]
+      )
+
     DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
       if currentIdx >= exercises.count - 1 {
         currentIdx = 0
@@ -72,6 +78,7 @@ struct WorkoutScreen: View {
   }
 
   func onFinishSet() {
+    Analytics.logEvent(Events.WorkoutEnded.rawValue, parameters: ["Sets": currentSet+1])
     dismiss()
   }
 
